@@ -779,7 +779,7 @@ class EDS extends DefaultRecord
     {
         $list = $this->extractEbscoDataFromRecordInfo('BibRecord/BibEntity/Titles');
         foreach ($list as $titleRecord) {
-            if ('main' == ($titleRecord['Type'] ?? '')) {
+            if ('main' === ($titleRecord['Type'] ?? '')) {
                 return $titleRecord['TitleFull'];
             }
         }

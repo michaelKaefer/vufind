@@ -92,7 +92,7 @@ class Params extends \VuFind\Search\Base\Params
     public function addHiddenFilter(string $newFilter): void
     {
         [$field, $value] = $this->parseFilter($newFilter);
-        if ($field == 'ids') {
+        if ($field === 'ids') {
             $this->setRecordIdsFromFilter($value);
         } else {
             parent::addHiddenFilter($newFilter);

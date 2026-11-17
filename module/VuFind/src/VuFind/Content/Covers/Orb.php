@@ -105,7 +105,7 @@ class Orb extends \VuFind\Content\AbstractCover implements \VuFind\Http\CachingD
             throw new \Exception('CachingDownloader initialization failed.');
         }
         $json = $this->cachingDownloader->downloadJson($url);
-        $imageVersion = $size == 'small' ? 'thumbnail' : 'original';
+        $imageVersion = $size === 'small' ? 'thumbnail' : 'original';
         foreach ($json->data as $title) {
             if (
                 $title->ean13 == $ean

@@ -134,7 +134,7 @@ class AdvancedAction extends AbstractSearchAndResultsAction
                             $searchObject->getParams()->removeFilter($orLimitFilt);
                         }
                     } else {
-                        if ('y' == $facetList[$facet]['DefaultOn']) {
+                        if ('y' === $facetList[$facet]['DefaultOn']) {
                             $facetList[$facet]['selected'] = true;
                         }
                     }
@@ -229,7 +229,7 @@ class AdvancedAction extends AbstractSearchAndResultsAction
         if ($searchObject) {
             $filters = $searchObject->getParams()->getFilterList();
             foreach ($filters as $key => $value) {
-                if ('PublicationDate' == $key) {
+                if ('PublicationDate' === $key) {
                     if ($range = SolrUtils::parseRange($value[0]['value'])) {
                         $from = $range['from'] == '*' ? '11' : $range['from'];
                         $to = $range['to'] == '*' ? '12' : $range['to'];

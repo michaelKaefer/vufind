@@ -150,7 +150,7 @@ class Icon
         $attrStr = '';
         foreach ($attrs as $key => $val) {
             // class gets special handling in the template; don't use it now:
-            if ($key == 'class') {
+            if ($key === 'class') {
                 continue;
             }
             $attrStr .= ' ' . $key . '="' . ($this->esc)($val) . '"';

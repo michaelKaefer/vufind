@@ -140,7 +140,7 @@ trait TranslatorAwareTrait
         // Figure out the text domain for the string:
         [$domain, $str] = $this->extractTextDomain($target);
 
-        if ($this->getTranslatorLocale() == 'debug') {
+        if ($this->getTranslatorLocale() === 'debug') {
             return $this->getDebugTranslation($domain, $str, $tokens);
         }
 

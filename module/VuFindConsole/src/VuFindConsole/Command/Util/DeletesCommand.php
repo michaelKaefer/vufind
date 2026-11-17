@@ -177,7 +177,7 @@ class DeletesCommand extends AbstractSolrCommand
         );
 
         // Build list of records to delete:
-        $ids = ($mode == 'flat')
+        $ids = ($mode === 'flat')
             ? $this->getIdsFromFlatFile($filename)
             : $this->getIdsFromMarcFile($filename, $output);
 

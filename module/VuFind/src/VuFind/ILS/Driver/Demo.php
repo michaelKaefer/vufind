@@ -537,7 +537,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
             'addStorageRetrievalRequestLink' => $patron ? 'check' : false,
             'ILLRequest'   => 'auto',
             'addILLRequestLink' => $patron ? 'check' : false,
-            'services'     => $status == 'Available' ? $this->getFakeServices() : [],
+            'services'     => $status === 'Available' ? $this->getFakeServices() : [],
         ];
 
         switch (rand(1, 5)) {
@@ -635,7 +635,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
                 }
             }
 
-            if ($requestType == 'Holds') {
+            if ($requestType === 'Holds') {
                 $pos = rand() % 5;
                 if ($pos > 1) {
                     $currentItem['position'] = $pos;
@@ -665,7 +665,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
                 $currentItem['processed'] = ($status == 1 || rand(1, 3) == 3)
                     ? $this->dateConverter->convertToDisplayDate('U', time())
                     : '';
-                if ($requestType == 'ILLRequests') {
+                if ($requestType === 'ILLRequests') {
                     $transit = rand() % 2;
                     if (
                         !$currentItem['available']
@@ -2845,7 +2845,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
     public function getConfig(string $function, array $params = []): array
     {
         $this->checkIntermittentFailure();
-        if ($function == 'Holds') {
+        if ($function === 'Holds') {
             return $this->config['Holds']
                 ?? [
                     'HMACKeys' => 'id:item_id:level',
@@ -2854,13 +2854,13 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
                     'defaultRequiredDate' => 'driver:0:2:0',
                 ];
         }
-        if ($function == 'Holdings') {
+        if ($function === 'Holdings') {
             return [
                 'itemLimit' => $this->config['Holdings']['itemLimit'] ?? null,
             ];
         }
         if (
-            $function == 'StorageRetrievalRequests'
+            $function === 'StorageRetrievalRequests'
             && $this->storageRetrievalRequests
         ) {
             return [
@@ -2870,7 +2870,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
                     . ' with some <span style="color: red">styling</span>.',
             ];
         }
-        if ($function == 'ILLRequests' && $this->ILLRequests) {
+        if ($function === 'ILLRequests' && $this->ILLRequests) {
             return [
                 'enabled' => true,
                 'HMACKeys' => 'number',
@@ -2881,11 +2881,11 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
                     . ' with some <span style="color: red">styling</span>.',
             ];
         }
-        if ($function == 'changePassword') {
+        if ($function === 'changePassword') {
             return $this->config['changePassword']
                 ?? ['minLength' => 4, 'maxLength' => 20];
         }
-        if ($function == 'getMyTransactionHistory') {
+        if ($function === 'getMyTransactionHistory') {
             if (empty($this->config['TransactionHistory']['enabled'])) {
                 return [];
             }
@@ -2930,7 +2930,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
                 'max_results' => $this->config['Holds']['max_page_size'] ?? 100,
             ];
         }
-        if ($function == 'patronLogin') {
+        if ($function === 'patronLogin') {
             return [
                 'loginMethod'
                     => $this->config['Catalog']['loginMethod'] ?? 'password',
@@ -2940,7 +2940,7 @@ class Demo extends AbstractBase implements \VuFind\I18n\HasSorterInterface
             $config = $this->config['PasswordRecovery'] ?? [];
             return ($config['enabled'] ?? false) ? $config : [];
         }
-        if ($function == 'OnlinePayment') {
+        if ($function === 'OnlinePayment') {
             return $this->config['OnlinePayment'] ?? [];
         }
 

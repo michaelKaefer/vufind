@@ -130,7 +130,7 @@ class RecordDataFormatter
         if ($value instanceof PropertyStringInterface) {
             $value = (string)$value;
         }
-        if (!empty($value) || ($ignoreCombineAlt && ($options['renderType'] ?? 'Simple') == 'CombineAlt')) {
+        if (!empty($value) || ($ignoreCombineAlt && ($options['renderType'] ?? 'Simple') === 'CombineAlt')) {
             return true;
         }
         $allowZero = $options['allowZero'] ?? true;

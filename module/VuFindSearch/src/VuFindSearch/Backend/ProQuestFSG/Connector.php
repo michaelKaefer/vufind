@@ -119,7 +119,7 @@ class Connector extends \VuFindSearch\Backend\SRU\Connector
         $path = $this->defaultPath;
         foreach (($options['filters'] ?? []) as $filter) {
             [$filterKey, $filterValue] = explode(':', $filter, 2);
-            if ('Databases' == $filterKey) {
+            if ('Databases' === $filterKey) {
                 if (!$this->validateDatabaseValue($filterValue)) {
                     // This may happen in the context of a blended search,
                     // when the database is valid for another backend.

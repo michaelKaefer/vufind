@@ -356,7 +356,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
                         if ($multiple == 'Deposito2') {
                             $multiple = 'Depósito2';
                         }
-                        if ($multiple == 'Deposito') {
+                        if ($multiple === 'Deposito') {
                             $multiple = 'Depósito';
                         }
                         $data[$row['BIB_ITM_NBR']] = [
@@ -481,7 +481,7 @@ class Amicus extends AbstractBase implements TranslatorAwareInterface
                 if ($loc == 'Deposito2') {
                     $loc = 'Depósito2';
                 }
-                if ($loc == 'Deposito') {
+                if ($loc === 'Deposito') {
                     $loc = 'Depósito';
                 }
 

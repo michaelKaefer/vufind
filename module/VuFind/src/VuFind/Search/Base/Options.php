@@ -785,7 +785,7 @@ abstract class Options implements TranslatorAwareInterface
         if (empty($this->rssSort)) {
             return $sort;
         }
-        if ($sort == 'relevance') {
+        if ($sort === 'relevance') {
             return $this->rssSort;
         }
         return $this->rssSort . ',' . $sort;

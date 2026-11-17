@@ -120,7 +120,7 @@ class Export
                     $value = null !== ($configValue = $this->mainConfig[$parts[1]][$parts[2]] ?? null)
                         ? $configValue
                         : $parts[3];
-                    if ($parts[0] == 'encodedConfig') {
+                    if ($parts[0] === 'encodedConfig') {
                         $value = urlencode($value);
                     }
                     $template = str_replace('{' . $current . '}', $value, $template);
@@ -344,7 +344,7 @@ class Export
             foreach ($formatSettings as $format => $allowedContexts) {
                 if (
                     str_contains($allowedContexts, $context)
-                    || ($context == 'record' && $allowedContexts == 1)
+                    || ($context === 'record' && $allowedContexts == 1)
                 ) {
                     $active[] = $format;
                 }
@@ -352,7 +352,7 @@ class Export
 
             // for legacy settings [BulkExport]
             if (
-                $context == 'bulk'
+                $context === 'bulk'
                 && ($this->mainConfig['BulkExport']['enabled'] ?? false)
                 && $bulkOptions = $this->mainConfig['BulkExport']['options'] ?? null
             ) {

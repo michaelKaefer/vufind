@@ -632,7 +632,7 @@ class GeniePlus extends AbstractAPI
             'page-size' => $params['limit'] ?? 100,
             'page' => ($params['page'] ?? 1) - 1,
             'fields' => implode(',', $fields),
-            'command' => "$idField == '$safeId' AND $archiveField == 'No'",
+            'command' => "$idField == '$safeId' AND $archiveField === 'No'",
         ];
         $json = $this->callApiWithToken('GET', $path, $params)->getBody();
         $response = json_decode($json, true);

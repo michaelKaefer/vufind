@@ -412,12 +412,12 @@ abstract class AbstractRecordAction extends AbstractTemplateRenderingAction impl
         // Special case -- handle login request (currently needed for holdings tab when driver-based holds mode is
         // enabled, but may also be useful in other circumstances):
         if (
-            $this->getQueryParam('login') == 'true'
+            $this->getQueryParam('login') === 'true'
             && !$this->getUser()
         ) {
             return $this->getHelper(LoginHelper::class)->forceLogin($this->request, $this->response);
         } elseif (
-            $this->getQueryParam('catalogLogin') == 'true'
+            $this->getQueryParam('catalogLogin') === 'true'
             && !is_array($patron = $this->getHelper(LoginHelper::class)->catalogLogin($this->request, $this->response))
         ) {
             if (!($patron instanceof ResponseInterface)) {

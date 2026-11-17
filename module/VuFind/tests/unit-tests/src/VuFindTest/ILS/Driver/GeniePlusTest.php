@@ -82,7 +82,7 @@ class GeniePlusTest extends \VuFindTest\Unit\ILSDriverTestCase
             'page-size' => 1,
             'page' => 0,
             'fields' => 'ID,Name,Email',
-            'command' => "Email == 'foo@foo.com' AND InstitutionalIdNumber == 'bar'",
+            'command' => "Email == 'foo@foo.com' AND InstitutionalIdNumber === 'bar'",
         ],
         [
             'Accept: application/json',
@@ -527,7 +527,7 @@ class GeniePlusTest extends \VuFindTest\Unit\ILSDriverTestCase
                         'page-size' => 100,
                         'page' => 0,
                         'fields' => 'Inventory.Barcode,Inventory.Inventory@Catalog.UniqRecNum,ClaimDate',
-                        'command' => "Borrower.ID == 'fake.user.fake.com' AND Archive == 'No'",
+                        'command' => "Borrower.ID == 'fake.user.fake.com' AND Archive === 'No'",
                     ],
                     [
                         'Accept: application/json',

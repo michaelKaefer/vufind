@@ -133,7 +133,7 @@ class IdentifierLinksLookup extends AbstractBase
                 foreach ($next as $key => $data) {
                     if (!isset($gatheredData[$key])) {
                         $gatheredData[$key] = $data;
-                    } elseif ($this->multiMode == 'merge') {
+                    } elseif ($this->multiMode === 'merge') {
                         $gatheredData[$key] = array_merge($gatheredData[$key], $data);
                     }
                 }

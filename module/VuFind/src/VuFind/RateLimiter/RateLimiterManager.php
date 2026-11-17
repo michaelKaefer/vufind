@@ -274,7 +274,7 @@ class RateLimiterManager implements LoggerAwareInterface, TranslatorAwareInterfa
      */
     public function getPolicyIdForEvent(MvcEvent $event): ?string
     {
-        if ($event->getRouteMatch()->getParams()['controller'] == 'Turnstile') {
+        if ($event->getRouteMatch()->getParams()['controller'] === 'Turnstile') {
             return null;
         }
         $isCrawler = null;

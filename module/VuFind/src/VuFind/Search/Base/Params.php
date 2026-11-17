@@ -441,7 +441,7 @@ class Params
         }
 
         // Increase default limit for RSS mode:
-        if ($this->getView() == 'rss' && $defaultLimit < 50) {
+        if ($this->getView() === 'rss' && $defaultLimit < 50) {
             $defaultLimit = 50;
         }
 
@@ -581,7 +581,7 @@ class Params
 
         // If we ended up with a basic search, it's probably the result of
         // submitting an empty form, and more processing may be needed:
-        if ($this->searchType == 'basic') {
+        if ($this->searchType === 'basic') {
             // Set a default handler if necessary:
             if ($this->query->getHandler() === null) {
                 $this->query->setHandler($this->getOptions()->getDefaultHandler());
@@ -636,7 +636,7 @@ class Params
         // Check for a view parameter in the url.
         $view = $request['view'] ?? null;
         $validViews = array_keys($this->getOptions()->getViewOptions());
-        if ($view == 'rss') {
+        if ($view === 'rss') {
             // RSS is a special case that does not require config validation
             $this->setView('rss');
         } elseif (!empty($view) && in_array($view, $validViews)) {
@@ -759,7 +759,7 @@ class Params
         $this->sort = $this->isValidSort($sort) ? $sort : $this->getDefaultSort();
 
         // In RSS mode, we may want to adjust sort settings:
-        if (!$this->skipRssSort && $this->getView() == 'rss') {
+        if (!$this->skipRssSort && $this->getView() === 'rss') {
             $this->sort = $this->getOptions()->getRssSort($this->sort);
         }
     }

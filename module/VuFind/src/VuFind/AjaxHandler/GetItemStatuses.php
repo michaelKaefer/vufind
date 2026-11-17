@@ -160,9 +160,9 @@ class GetItemStatuses extends AbstractBase implements
         $list = array_map('unserialize', array_unique(array_map('serialize', $rawList)));
 
         // If we're in "first" mode, reduce list to first list value:
-        if ($mode == 'first' && count($list) > 0) {
+        if ($mode === 'first' && count($list) > 0) {
             $list = [$list[0]];
-        } elseif ($mode == 'msg' && count($list) > 1) {
+        } elseif ($mode === 'msg' && count($list) > 1) {
             // Message mode?  Return the specified message, translated to the
             // appropriate language.
             return [$this->translate($msg)];
@@ -182,7 +182,7 @@ class GetItemStatuses extends AbstractBase implements
      */
     protected function getCallnumberHandler($list = null, $displaySetting = null)
     {
-        if ($displaySetting == 'msg' && count($list) > 1) {
+        if ($displaySetting === 'msg' && count($list) > 1) {
             return false;
         }
         return $this->config['Item_Status']['callnumber_handler'] ?? false;

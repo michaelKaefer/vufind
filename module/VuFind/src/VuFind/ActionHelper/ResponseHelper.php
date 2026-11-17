@@ -141,7 +141,7 @@ class ResponseHelper implements HelperInterface, TranslatorAwareInterface
     public function getExceptionResponse(ResponseInterface $response, string $type, \Exception $e): ResponseInterface
     {
         $errorMsg = $this->translate('An error has occurred');
-        $debugMsg = ('development' == APPLICATION_ENV) ? ': ' . (string)$e : '';
+        $debugMsg = ('development' === APPLICATION_ENV) ? ': ' . (string)$e : '';
         return $this->getAjaxResponse(
             $response,
             $type,

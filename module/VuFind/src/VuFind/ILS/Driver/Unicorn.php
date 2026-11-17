@@ -670,7 +670,7 @@ class Unicorn extends AbstractBase implements
             $items[] = [
                 'id' => $catkey,
                 'reqnum' => $holdkey,
-                'available' => $available == 'Y',
+                'available' => $available === 'Y',
                 'expire' => $this->formatDateTime($date_expires),
                 'create' => $this->formatDateTime($date_created),
                 'type' => $type,
@@ -825,7 +825,7 @@ class Unicorn extends AbstractBase implements
                 'charge_key' => $charge_key,
                 'item_id' => $charge_key,
                 'callnum' => $callnum,
-                'dueStatus' => $overdue == 'Y' ? 'overdue' : '',
+                'dueStatus' => $overdue === 'Y' ? 'overdue' : '',
             ];
         }
 

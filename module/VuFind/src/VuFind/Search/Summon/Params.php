@@ -195,7 +195,7 @@ class Params extends \VuFind\Search\Base\Params
         // setting this facet actually EXPANDS rather than reduces the result set.
         foreach ($facets as $i => $facet) {
             [$field] = explode(':', $facet['filter']);
-            if ($field == 'holdingsOnly' || $field == 'queryExpansion') {
+            if ($field === 'holdingsOnly' || $field === 'queryExpansion') {
                 $facets[$i]['alwaysVisible'] = true;
             }
         }
@@ -220,7 +220,7 @@ class Params extends \VuFind\Search\Base\Params
             // If we have an empty search with relevance sort, see if there is
             // an override configured:
             if (
-                $sort == 'relevance' && $this->getQuery()->getAllTerms() == ''
+                $sort === 'relevance' && $this->getQuery()->getAllTerms() == ''
                 && ($relOv = $this->getOptions()->getEmptySearchRelevanceOverride())
             ) {
                 $sort = $relOv;
@@ -229,7 +229,7 @@ class Params extends \VuFind\Search\Base\Params
 
         // The "relevance" sort option is a VuFind reserved word; we need to make
         // this null in order to achieve the desired effect with Summon:
-        $finalSort = ($sort == 'relevance') ? null : $sort;
+        $finalSort = ($sort === 'relevance') ? null : $sort;
         $backendParams->set('sort', $finalSort);
 
         $backendParams->set('didYouMean', $options->spellcheckEnabled());
@@ -265,7 +265,7 @@ class Params extends \VuFind\Search\Base\Params
             // if not, override them with defaults.
             $parts = explode(',', $facet);
             $facetName = $parts[0];
-            $defaultMode = ($this->getFacetOperator($facet) == 'OR') ? 'or' : 'and';
+            $defaultMode = ($this->getFacetOperator($facet) === 'OR') ? 'or' : 'and';
             $facetMode = $parts[1] ?? $defaultMode;
             $facetPage = $parts[2] ?? 1;
             $facetLimit = $parts[3] ?? $this->getFacetLimitForField($facetName);
@@ -295,26 +295,26 @@ class Params extends \VuFind\Search\Base\Params
                     $safeValue = SummonQuery::escapeParam($filt['value']);
                     // Special case -- "holdings only" is a separate parameter from
                     // other facets.
-                    if ($filt['field'] == 'holdingsOnly') {
+                    if ($filt['field'] === 'holdingsOnly') {
                         $params->set(
                             'holdings',
-                            strtolower(trim($safeValue)) == 'true'
+                            strtolower(trim($safeValue)) === 'true'
                         );
-                    } elseif ($filt['field'] == 'queryExpansion') {
+                    } elseif ($filt['field'] === 'queryExpansion') {
                         // Special case -- "query expansion" is a separate parameter
                         // from other facets.
                         $params->set(
                             'expand',
-                            strtolower(trim($safeValue)) == 'true'
+                            strtolower(trim($safeValue)) === 'true'
                         );
-                    } elseif ($filt['field'] == 'openAccessFilter') {
+                    } elseif ($filt['field'] === 'openAccessFilter') {
                         // Special case -- "open access filter" is a separate
                         // parameter from other facets.
                         $params->set(
                             'openAccessFilter',
-                            strtolower(trim($safeValue)) == 'true'
+                            strtolower(trim($safeValue)) === 'true'
                         );
-                    } elseif ($filt['field'] == 'excludeNewspapers') {
+                    } elseif ($filt['field'] === 'excludeNewspapers') {
                         // Special case -- support a checkbox for excluding
                         // newspapers:
                         $params
@@ -325,14 +325,14 @@ class Params extends \VuFind\Search\Base\Params
                         $to = SummonQuery::escapeParam($range['to']);
                         $params
                             ->add('rangeFilters', "{$filt['field']},{$from}:{$to}");
-                    } elseif ($filt['operator'] == 'OR') {
+                    } elseif ($filt['operator'] === 'OR') {
                         // Special case -- OR facets:
                         $orFacets[$filt['field']] ??= [];
                         $orFacets[$filt['field']][] = $safeValue;
                     } else {
                         // Standard case:
                         $fq = "{$filt['field']},{$safeValue}";
-                        if ($filt['operator'] == 'NOT') {
+                        if ($filt['operator'] === 'NOT') {
                             $fq .= ',true';
                         }
                         $params->add('filters', $fq);

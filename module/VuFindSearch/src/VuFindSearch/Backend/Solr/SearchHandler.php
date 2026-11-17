@@ -217,7 +217,7 @@ class SearchHandler
      */
     public function hasExtendedDismax()
     {
-        return $this->hasDismax() && ('edismax' == $this->getDismaxHandler());
+        return $this->hasDismax() && ('edismax' === $this->getDismaxHandler());
     }
 
     /**
@@ -319,7 +319,7 @@ class SearchHandler
             // our default:
             $foundSetting = false;
             foreach ($this->specs['DismaxParams'] as $current) {
-                if ($current[0] == 'mm') {
+                if ($current[0] === 'mm') {
                     $foundSetting = true;
                     break;
                 }

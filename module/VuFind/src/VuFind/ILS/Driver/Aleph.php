@@ -604,7 +604,7 @@ class Aleph extends AbstractBase implements
                 $location = $datafield->xpath('./subfield[@code="a"]/text()');
                 $signature = $datafield->xpath('./subfield[@code="d"]/text()');
                 $availability
-                    = ($status[0] == 'available' || $status[0] == 'check_holdings');
+                    = ($status[0] === 'available' || $status[0] == 'check_holdings');
                 $reserve = true;
                 $temp[] = [
                     'id' => $id,
@@ -715,7 +715,7 @@ class Aleph extends AbstractBase implements
                 continue;
             }
             $availability = false;
-            //$reserve = ($item_status['request'] == 'C')?'N':'Y';
+            //$reserve = ($item_status['request'] === 'C')?'N':'Y';
             $collection = (string)$z30->{'z30-collection'};
             $collection_desc = ['desc' => $collection];
             if ($this->alephTranslator) {
@@ -732,12 +732,12 @@ class Aleph extends AbstractBase implements
             if (in_array($status, $this->available_statuses)) {
                 $availability = true;
             }
-            if ($item_status['request'] == 'Y' && $availability == false) {
+            if ($item_status['request'] === 'Y' && $availability == false) {
                 $addLink = true;
             }
             if (!empty($patron)) {
                 $hold_request = $item->xpath('info[@type="HoldRequest"]/@allowed');
-                $addLink = ($hold_request[0] == 'Y');
+                $addLink = ($hold_request[0] === 'Y');
             }
             $matches = [];
             $dueDateWithStatusRegEx
@@ -745,7 +745,7 @@ class Aleph extends AbstractBase implements
             $dueDateRegEx = '/([0-9]*\\/[a-zA-Z0-9]*\\/[0-9]*)/';
             if (preg_match($dueDateWithStatusRegEx, $status, $matches)) {
                 $duedate = $this->parseDate($matches[1]);
-                $requested = (trim($matches[2]) == 'Requested');
+                $requested = (trim($matches[2]) === 'Requested');
             } elseif (preg_match($dueDateRegEx, $status, $matches)) {
                 $duedate = $this->parseDate($matches[1]);
             } else {
@@ -878,7 +878,7 @@ class Aleph extends AbstractBase implements
                 'reqnum' => $reqnum,
                 'barcode' => $barcode,
                 'duedate' => $this->parseDate($due),
-                'renewable' => $renew[0] == 'Y',
+                'renewable' => $renew[0] === 'Y',
             ];
             if ($history) {
                 $issued = (string)$z36->{$prefix . 'loan-date'};
@@ -995,7 +995,7 @@ class Aleph extends AbstractBase implements
                 $position = $matches['position'];
             }
             $holddate = $holddate == '00000000' ? null : $this->parseDate($holddate);
-            $delete = ($delete[0] == 'Y');
+            $delete = ($delete[0] === 'Y');
             // Secondary, Aleph-specific identifier that may be useful for
             // local customizations
             $adm_id = (string)$z30->{'z30-doc-number'};
@@ -1114,7 +1114,7 @@ class Aleph extends AbstractBase implements
             $checkout = (string)$z31->{'z31-date'};
             $id = $this->barcodeToID($barcode);
             $cachetype = strtolower((string)($item->attributes()->type ?? ''));
-            $mult = $cachetype == 'debit' ? -100 : 100;
+            $mult = $cachetype === 'debit' ? -100 : 100;
             $amount
                 = (float)(preg_replace("/[\(\)]/", '', (string)$z31->{'z31-sum'}))
                 * $mult;
@@ -1548,7 +1548,7 @@ class Aleph extends AbstractBase implements
     public function supportsMethod($method, $params)
     {
         // Loan history is only available if properly configured
-        if ($method == 'getMyTransactionHistory') {
+        if ($method === 'getMyTransactionHistory') {
             return !empty($this->config['TransactionHistory']['enabled']);
         }
         return is_callable([$this, $method]);
@@ -1567,7 +1567,7 @@ class Aleph extends AbstractBase implements
      */
     public function getConfig(string $function, array $params = []): array
     {
-        if ($function == 'Holds') {
+        if ($function === 'Holds') {
             $holdsConfig = $this->config['Holds'] ?? [];
             $defaults = [
                 'HMACKeys' => 'id:item_id',

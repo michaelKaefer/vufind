@@ -93,7 +93,7 @@ class Holds
                         if (empty($item[$fieldName])) {
                             // begin aliasing
                             if (
-                                $fieldName == 'notes'
+                                $fieldName === 'notes'
                                 && !empty($item['holdings_notes'])
                             ) {
                                 // using notes as alias for holdings_notes
@@ -182,9 +182,9 @@ class Holds
 
         $mode = $this->catalog->getHoldsMode();
 
-        if ($mode == 'disabled') {
+        if ($mode === 'disabled') {
             $holdings = $this->standardHoldings($result);
-        } elseif ($mode == 'driver') {
+        } elseif ($mode === 'driver') {
             $holdings = $this->driverHoldings($result, $config, !empty($blocks), $linkOverrides);
         } else {
             $holdings = $this->generateHoldings($result, $mode, $config, $linkOverrides);
@@ -346,7 +346,7 @@ class Holds
                         // If a valid holdable status has been set, use it to
                         // determine if a hold link is created
                         if ($addlink && ($copy['is_holdable'] ?? true)) {
-                            if ($holdConfig['function'] == 'getHoldLink') {
+                            if ($holdConfig['function'] === 'getHoldLink') {
                                 /* Build opac link */
                                 $holdings[$location_key][$copy_key]['link']
                                     = $this->catalog->getHoldLink(

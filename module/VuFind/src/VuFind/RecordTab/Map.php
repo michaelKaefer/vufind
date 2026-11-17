@@ -226,11 +226,11 @@ class Map extends AbstractBase
     public function getMapLabels()
     {
         $mapLabelData = explode(':', $this->mapLabels);
-        if ($mapLabelData[0] == 'driver') {
+        if ($mapLabelData[0] === 'driver') {
             return $this->getRecordDriver()->tryMethod('getCoordinateLabels') ?? [];
         }
         $labels = [];
-        if ($mapLabelData[0] == 'file') {
+        if ($mapLabelData[0] === 'file') {
             $coords = $this->getRecordDriver()->tryMethod('getDisplayCoordinates');
             /* read lookup file into array */
             $label_lookup = [];

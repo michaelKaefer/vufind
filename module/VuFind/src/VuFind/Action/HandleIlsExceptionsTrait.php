@@ -70,7 +70,7 @@ trait HandleIlsExceptionsTrait
         // Always display generic message:
         $this->getHelper(FlashMessagesHelper::class)->addErrorMessage('ils_connection_failed');
         // In development mode, also show technical failure message:
-        if ('development' == APPLICATION_ENV) {
+        if ('development' === APPLICATION_ENV) {
             $this->getHelper(FlashMessagesHelper::class)->addErrorMessage((string)$exception);
         }
         if (null !== $this->ilsExceptionResponse) {

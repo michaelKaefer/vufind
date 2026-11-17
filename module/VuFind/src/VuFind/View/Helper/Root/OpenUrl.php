@@ -280,7 +280,7 @@ class OpenUrl
 
         // If we got this far, use the defaults -- true for results, false for
         // everywhere else.
-        return $this->area == 'results';
+        return $this->area === 'results';
     }
 
     /**

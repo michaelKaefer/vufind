@@ -115,7 +115,7 @@ trait AjaxResponseTrait
      */
     protected function getExceptionResponse($type, \Exception $e)
     {
-        $debugMsg = ('development' == APPLICATION_ENV)
+        $debugMsg = ('development' === APPLICATION_ENV)
             ? ': ' . $e->getMessage() : '';
         return $this->getAjaxResponse(
             $type,

@@ -198,7 +198,7 @@ class WebhookAction extends AbstractAction implements LoggerAwareInterface, Tran
         // Get primary ID
         $primaryId = $requestBodyJson->webhook_user->user->primary_id ?? null;
 
-        if ($method == 'CREATE' || $method == 'UPDATE') {
+        if ($method === 'CREATE' || $method === 'UPDATE') {
             // Get username (could e. g. be the barcode)
             $username = null;
             $userIdentifiers = $requestBodyJson->webhook_user->user->user_identifier ?? [];
@@ -231,10 +231,10 @@ class WebhookAction extends AbstractAction implements LoggerAwareInterface, Tran
                 }
             }
 
-            if ($method == 'CREATE') {
+            if ($method === 'CREATE') {
                 $user = $this->userService->getUserByUsername($username)
                     ?? $this->userService->createEntityForUsername($username);
-            } elseif ($method == 'UPDATE') {
+            } elseif ($method === 'UPDATE') {
                 $user = $this->userService->getUserByCatId($primaryId);
             }
 
@@ -248,7 +248,7 @@ class WebhookAction extends AbstractAction implements LoggerAwareInterface, Tran
 
                 try {
                     $this->userService->persistEntity($user);
-                    if ($method == 'CREATE') {
+                    if ($method === 'CREATE') {
                         $this->sendSetPasswordEmail($user);
                     }
                     $jsonResponse = $this->createAlmaJsonResponse(
@@ -274,7 +274,7 @@ class WebhookAction extends AbstractAction implements LoggerAwareInterface, Tran
                     404
                 );
             }
-        } elseif ($method == 'DELETE') {
+        } elseif ($method === 'DELETE') {
             $user = $this->userService->getUserByCatId($primaryId);
             if ($user) {
                 try {

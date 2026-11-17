@@ -62,7 +62,7 @@ class RenewalsHelper
     ): array {
         // Only add renewal information if enabled:
         if ($renewStatus) {
-            if ($renewStatus['function'] == 'renewMyItemsLink') {
+            if ($renewStatus['function'] === 'renewMyItemsLink') {
                 // Build OPAC URL
                 $ilsDetails['renew_link'] = $catalog->renewMyItemsLink($ilsDetails);
             } else {

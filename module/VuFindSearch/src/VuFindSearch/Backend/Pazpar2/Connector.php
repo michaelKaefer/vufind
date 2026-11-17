@@ -260,7 +260,7 @@ class Connector implements \Psr\Log\LoggerAwareInterface
             return false;
         }
         $set = $this->query('settings', $settings);
-        return $set->status == 'OK';
+        return $set->status === 'OK';
     }
 
     /**

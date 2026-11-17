@@ -88,7 +88,7 @@ class Params extends \VuFind\Search\Base\Params
         // The "relevance" sort option is a VuFind reserved word; we need to make
         // this null in order to achieve the desired effect with Primo:
         $sort = $this->getSort();
-        $finalSort = ($sort == 'relevance') ? null : $sort;
+        $finalSort = ($sort === 'relevance') ? null : $sort;
         $backendParams->set('sort', $finalSort);
         $backendParams->set('filterList', $this->getFilterSettings());
         if ($this->getOptions()->highlightEnabled()) {

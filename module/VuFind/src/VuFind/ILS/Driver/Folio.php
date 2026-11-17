@@ -238,7 +238,7 @@ class Folio extends AbstractAPI implements
     {
         // Only log non-GET requests, unless configured otherwise
         if (
-            $method == 'GET'
+            $method === 'GET'
             && !($this->config['API']['debug_get_requests'] ?? false)
         ) {
             return;
@@ -829,7 +829,7 @@ class Folio extends AbstractAPI implements
         $excludeLocs = (array)($this->config['Holds']['excludeHoldLocations'] ?? []);
 
         // Exclude checking by regex match
-        if (trim(strtolower($mode)) == 'regex') {
+        if (trim(strtolower($mode)) === 'regex') {
             foreach ($excludeLocs as $pattern) {
                 $match = @preg_match($pattern, $locationName);
                 // Invalid regex, skip this pattern
@@ -1144,7 +1144,7 @@ class Folio extends AbstractAPI implements
             'barcode' => $item->barcode ?? '',
             'status' => $item->status->name,
             'duedate' => $dueDateValue,
-            'availability' => $item->status->name == 'Available',
+            'availability' => $item->status->name === 'Available',
             'item_notes' => !empty(implode($itemNotes)) ? $itemNotes : null,
             'reserve' => 'TODO',
             'addLink' => 'check',
@@ -2054,7 +2054,7 @@ class Folio extends AbstractAPI implements
      */
     public function getPickupLocations($patron, $holdInfo = null)
     {
-        if ('Delivery' == ($holdInfo['requestGroupId'] ?? null)) {
+        if ('Delivery' === ($holdInfo['requestGroupId'] ?? null)) {
             $addressTypes = $this->getAddressTypes();
             $limitDeliveryAddressTypes = $this->config['Holds']['limitDeliveryAddressTypes'] ?? [];
             if (in_array('FOLIO_DEFAULT', $limitDeliveryAddressTypes)) {
@@ -2158,7 +2158,7 @@ class Folio extends AbstractAPI implements
      */
     public function getDefaultPickUpLocation($patron = false, $holdDetails = null)
     {
-        if ('Delivery' == ($holdDetails['requestGroupId'] ?? null)) {
+        if ('Delivery' === ($holdDetails['requestGroupId'] ?? null)) {
             $deliveryPickupLocations = $this->getPickupLocations($patron, $holdDetails);
             if (count($deliveryPickupLocations) == 1) {
                 return $deliveryPickupLocations[0]['locationDisplay'];
@@ -2616,7 +2616,7 @@ class Folio extends AbstractAPI implements
         if ($isTitleLevel) {
             return $default_request;
         }
-        return ($holdDetails['status'] ?? '') == 'Available' ? 'Page' : $default_request;
+        return ($holdDetails['status'] ?? '') === 'Available' ? 'Page' : $default_request;
     }
 
     /**
@@ -2678,7 +2678,7 @@ class Folio extends AbstractAPI implements
         if (!empty($holdDetails['comment'])) {
             $requestBody['patronComments'] = $holdDetails['comment'];
         }
-        $allowedServicePoints = $fulfillmentValue == 'Delivery' ? null : $this->getAllowedServicePoints(
+        $allowedServicePoints = $fulfillmentValue === 'Delivery' ? null : $this->getAllowedServicePoints(
             $instance->id,
             $holdDetails['item_id'] ?? null,
             $holdDetails['patron']['id']

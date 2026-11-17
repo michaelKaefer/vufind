@@ -83,6 +83,6 @@ trait KeyGeneratorTrait
 
         // If we are in production mode reduce the rawkey to md5 hash which will
         // keep the key length at handy 32hex
-        return APPLICATION_ENV == 'production' ? md5($key) : $key;
+        return APPLICATION_ENV === 'production' ? md5($key) : $key;
     }
 }

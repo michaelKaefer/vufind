@@ -386,7 +386,7 @@ abstract class AbstractSearchAndResultsAction extends AbstractTemplateRenderingA
         }
 
         // Special case: If we're in RSS view, we need to render differently:
-        if (isset($templateParams['params']) && $templateParams['params']?->getView() == 'rss') {
+        if (isset($templateParams['params']) && $templateParams['params']?->getView() === 'rss') {
             return $this->getRssSearchResponse($templateParams);
         }
 

@@ -684,7 +684,7 @@ class XCNCIP2 extends AbstractBase implements
         // $location = '';
         // foreach ($locationNodes as $curLoc) {
         //     $type = $curLoc->xpath('ns1:LocationType');
-        //     if ((string)$type[0] == 'Permanent') {
+        //     if ((string)$type[0] === 'Permanent') {
         //         $tmp = $curLoc->xpath(
         //             'ns1:LocationName/ns1:LocationNameInstance' .
         //             '/ns1:LocationNameValue'
@@ -1571,7 +1571,7 @@ class XCNCIP2 extends AbstractBase implements
      */
     public function getConfig(string $function, array $params = []): array
     {
-        if ($function == 'Holds') {
+        if ($function === 'Holds') {
             $holdsConfig = $this->config['Holds'] ?? [];
             $extraHoldFields = empty($this->getPickUpLocations([]))
                 ? 'comments:requiredByDate'
@@ -1584,7 +1584,7 @@ class XCNCIP2 extends AbstractBase implements
             ];
             return $holdsConfig + $defaults;
         }
-        if ($function == 'StorageRetrievalRequests') {
+        if ($function === 'StorageRetrievalRequests') {
             $config = $this->config['StorageRetrievalRequests'] ?? [];
             $extraFields = empty($this->getPickUpLocations([]))
                 ? 'comments:requiredByDate:item-issue'

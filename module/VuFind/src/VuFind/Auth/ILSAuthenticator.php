@@ -196,14 +196,14 @@ class ILSAuthenticator implements DbServiceAwareInterface
         // Check if OpenSSL error is caused by blowfish support
         try {
             $cipher = ($this->cipherFactory)($algo);
-            if ($algo == 'blowfish') {
+            if ($algo === 'blowfish') {
                 trigger_error(
                     'Deprecated encryption algorithm (blowfish) detected',
                     E_USER_DEPRECATED
                 );
             }
         } catch (\InvalidArgumentException $e) {
-            if ($algo == 'blowfish') {
+            if ($algo === 'blowfish') {
                 throw new \VuFind\Exception\PasswordSecurity(
                     'The blowfish encryption algorithm ' .
                     'is not supported by your version of OpenSSL. ' .

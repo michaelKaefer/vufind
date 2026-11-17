@@ -208,7 +208,7 @@ class HierarchicalFacetListener
     protected function formatFacetField(string $facet, string $value): string
     {
         $allLevels = isset($this->displayStyles[$facet])
-            ? $this->displayStyles[$facet] == 'full'
+            ? $this->displayStyles[$facet] === 'full'
             : false;
         $separator = $this->separators[$facet] ?? '/';
         $domain = in_array($facet, $this->translatedFacets)

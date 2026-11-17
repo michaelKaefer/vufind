@@ -495,7 +495,7 @@ class VoyagerRestful extends Voyager implements
             if ($is_holdable) {
                 // Hold Type - If we have patron data, we can use it to determine if
                 // a hold link should be shown
-                if ($patron && $this->holdsMode == 'driver') {
+                if ($patron && $this->holdsMode === 'driver') {
                     // This limit is set as the api is slow to return results
                     if ($i < $this->holdCheckLimit && $this->holdCheckLimit != '0') {
                         $holdType = $this->determineHoldType(
@@ -573,8 +573,8 @@ class VoyagerRestful extends Voyager implements
     {
         $holdType = $data['holdtype'] ?? 'auto';
         $level = $data['level'] ?? 'copy';
-        $mode = ('title' == $level) ? $this->titleHoldsMode : $this->holdsMode;
-        if ('driver' == $mode && 'auto' == $holdType) {
+        $mode = ('title' === $level) ? $this->titleHoldsMode : $this->holdsMode;
+        if ('driver' === $mode && 'auto' === $holdType) {
             $itemID = $data['item_id'] ?? false;
             $result = $this->determineHoldType($patron['id'], $id, $itemID);
             if (!$result) {
@@ -582,7 +582,7 @@ class VoyagerRestful extends Voyager implements
             }
         }
 
-        if ('title' == $level && $this->requestGroupsEnabled) {
+        if ('title' === $level && $this->requestGroupsEnabled) {
             // Verify that there are valid request groups
             if (!$this->getRequestGroups($id, $patron)) {
                 return false;
@@ -1223,7 +1223,7 @@ class VoyagerRestful extends Voyager implements
             $blocks = $this->makeRequest($hierarchy, $params);
             if (
                 $blocks
-                && (string)$blocks->{'reply-text'} == 'ok'
+                && (string)$blocks->{'reply-text'} === 'ok'
                 && isset($blocks->blocks->institution->borrowingBlock)
             ) {
                 $blockReason = $this->extractBlockReasons(
@@ -1346,8 +1346,8 @@ class VoyagerRestful extends Voyager implements
             // but maybe in the future...
             foreach ($response->xpath('//ser:message') as $message) {
                 if (
-                    $message->attributes()->type == 'system'
-                    || $message->attributes()->type == 'error'
+                    $message->attributes()->type === 'system'
+                    || $message->attributes()->type === 'error'
                 ) {
                     return false;
                 }
@@ -1363,7 +1363,7 @@ class VoyagerRestful extends Voyager implements
                     }
                     $renewed = false;
                     foreach ($renewStatus->status as $status) {
-                        if ((string)$status == 'Renewed') {
+                        if ((string)$status === 'Renewed') {
                             $renewed = true;
                         }
                     }
@@ -1448,10 +1448,10 @@ class VoyagerRestful extends Voyager implements
                 $reply = (string)$check->$node;
 
                 // Valid Response
-                if ($reply == 'ok') {
+                if ($reply === 'ok') {
                     if ($check->$request) {
                         $requestAttributes = $check->$request->attributes();
-                        if ($requestAttributes['allowed'] == 'Y') {
+                        if ($requestAttributes['allowed'] === 'Y') {
                             return true;
                         }
                     }
@@ -1556,13 +1556,13 @@ class VoyagerRestful extends Voyager implements
             'http://www.endinfosys.com/Voyager/requests'
         );
         foreach ($response->xpath('//ser:message') as $message) {
-            if ($message->attributes()->type == 'success') {
+            if ($message->attributes()->type === 'success') {
                 return [
                     'success' => true,
                     'status' => 'hold_request_success',
                 ];
             }
-            if ($message->attributes()->type == 'system') {
+            if ($message->attributes()->type === 'system') {
                 return $this->holdError('hold_error_system');
             }
         }
@@ -1910,7 +1910,7 @@ class VoyagerRestful extends Voyager implements
                 foreach ($holds as &$hold) {
                     if ($hold['reqnum'] == $apiHold['reqnum']) {
                         // Ignore local holds
-                        if ($hold['db_code'] == 'LOCAL') {
+                        if ($hold['db_code'] === 'LOCAL') {
                             continue 2;
                         }
                         foreach ($copyFields as $field) {
@@ -1952,7 +1952,7 @@ class VoyagerRestful extends Voyager implements
 
         // Request was initiated before patron was logged in -
         // Let's determine Hold Type now
-        if ($type == 'auto') {
+        if ($type === 'auto') {
             $type = $this->determineHoldType($patron['id'], $bibId, $itemId);
             if (!$type) {
                 return $this->holdError('hold_error_blocked');
@@ -2033,7 +2033,7 @@ class VoyagerRestful extends Voyager implements
 
         // Optional check that the patron doesn't already have the bib on loan
         if ($this->checkLoans) {
-            $checkItemId = $this->checkLoans === 'same-item' && $level == 'copy'
+            $checkItemId = $this->checkLoans === 'same-item' && $level === 'copy'
                 && $itemId ? $itemId : null;
             if ($this->isRecordOnLoan($patron['id'], $bibId, $checkItemId)) {
                 return $this->holdError('hold_record_already_on_loan');
@@ -2047,7 +2047,7 @@ class VoyagerRestful extends Voyager implements
             'REQNNA' => $lastInterestDate,
             'REQCOMMENTS' => $comment,
         ];
-        if ($level == 'copy' && $itemId) {
+        if ($level === 'copy' && $itemId) {
             $requestData['itemId'] = $itemId;
         } elseif (isset($holdDetails['requestGroupId'])) {
             $requestData['requestGroupId'] = $holdDetails['requestGroupId'];
@@ -2107,13 +2107,13 @@ class VoyagerRestful extends Voyager implements
                 $cancel = $cancel->children();
                 $node = 'reply-text';
                 $reply = (string)$cancel->$node;
-                $count = ($reply == 'ok') ? $count + 1 : $count;
+                $count = ($reply === 'ok') ? $count + 1 : $count;
 
                 $response[$itemId] = [
-                    'success' => $reply == 'ok',
-                    'status' => ($reply == 'ok')
+                    'success' => $reply === 'ok',
+                    'status' => ($reply === 'ok')
                         ? 'hold_cancel_success' : 'hold_cancel_fail',
-                    'sysMessage' => ($reply == 'ok') ? false : $reply,
+                    'sysMessage' => ($reply === 'ok') ? false : $reply,
                 ];
             } else {
                 $response[$itemId] = [
@@ -2211,7 +2211,7 @@ class VoyagerRestful extends Voyager implements
                     if ($this->isLocalInst((string)$institution->attributes()->id)) {
                         // Take only renewability for local loans, other information
                         // we have already
-                        $renewable = (string)$loan->attributes()->canRenew == 'Y';
+                        $renewable = (string)$loan->attributes()->canRenew === 'Y';
 
                         foreach ($transactions as &$transaction) {
                             if (
@@ -2265,7 +2265,7 @@ class VoyagerRestful extends Voyager implements
                         'dueTime' => $dueTime,
                         'dueStatus' => $dueStatus,
                         'title' => (string)$loan->title,
-                        'renewable' => (string)$loan->attributes()->canRenew == 'Y',
+                        'renewable' => (string)$loan->attributes()->canRenew === 'Y',
                         'institution_id' => (string)$institution->attributes()->id,
                         'institution_name' => (string)$loan->dbName,
                         'institution_dbkey' => (string)$loan->dbKey,
@@ -2511,7 +2511,7 @@ class VoyagerRestful extends Voyager implements
         ];
 
         $xml = [];
-        if ('title' == $level) {
+        if ('title' === $level) {
             $xml['call-slip-title-parameters'] = [
                 'comment' => $comment,
                 'reqinput field="1"' => $details['volume'],
@@ -2546,7 +2546,7 @@ class VoyagerRestful extends Voyager implements
             $result = $result->children();
             $reply = (string)$result->{'reply-text'};
 
-            $responseNode = 'title' == $level
+            $responseNode = 'title' === $level
                 ? 'create-call-slip-title'
                 : 'create-call-slip';
             $note = (isset($result->$responseNode))
@@ -2554,7 +2554,7 @@ class VoyagerRestful extends Voyager implements
 
             // Valid Response
             $response = [];
-            if ($reply == 'ok' && $note == 'Your request was successful.') {
+            if ($reply === 'ok' && $note == 'Your request was successful.') {
                 $response['success'] = true;
                 $response['status'] = 'storage_retrieval_request_place_success';
             } else {
@@ -2612,14 +2612,14 @@ class VoyagerRestful extends Voyager implements
                 // Process Cancel
                 $cancel = $cancel->children();
                 $reply = (string)$cancel->{'reply-text'};
-                $count = ($reply == 'ok') ? $count + 1 : $count;
+                $count = ($reply === 'ok') ? $count + 1 : $count;
 
                 $response[$itemId] = [
-                    'success' => $reply == 'ok',
-                    'status' => ($reply == 'ok')
+                    'success' => $reply === 'ok',
+                    'status' => ($reply === 'ok')
                         ? 'storage_retrieval_request_cancel_success'
                         : 'storage_retrieval_request_cancel_fail',
-                    'sysMessage' => ($reply == 'ok') ? false : $reply,
+                    'sysMessage' => ($reply === 'ok') ? false : $reply,
                 ];
             } else {
                 $response[$itemId] = [
@@ -2827,7 +2827,7 @@ class VoyagerRestful extends Voyager implements
                         $libraries[] = [
                             'id' => (string)$option->attributes()->id,
                             'name' => (string)$option,
-                            'isDefault' => $option->attributes()->isDefault == 'Y',
+                            'isDefault' => $option->attributes()->isDefault === 'Y',
                         ];
                     }
                     break;
@@ -2836,7 +2836,7 @@ class VoyagerRestful extends Voyager implements
                         $locations[] = [
                             'id' => (string)$option->attributes()->id,
                             'name' => (string)$option,
-                            'isDefault' => $option->attributes()->isDefault == 'Y',
+                            'isDefault' => $option->attributes()->isDefault === 'Y',
                         ];
                     }
                     break;
@@ -2882,7 +2882,7 @@ class VoyagerRestful extends Voyager implements
             ? $data['item_id']
             : false;
 
-        if ($level == 'copy' && $itemID === false) {
+        if ($level === 'copy' && $itemID === false) {
             $this->debug('Item ID missing');
             return false;
         }
@@ -2892,7 +2892,7 @@ class VoyagerRestful extends Voyager implements
             $this->debug('getUBRequestDetails returned false');
             return false;
         }
-        if ($level == 'copy') {
+        if ($level === 'copy') {
             $found = false;
             foreach ($results['items'] as $item) {
                 if ($item['id'] == "$itemID.$id") {
@@ -3014,7 +3014,7 @@ class VoyagerRestful extends Voyager implements
             $locations[] = [
                 'id' => (string)$location->attributes()->id,
                 'name' => (string)$location,
-                'isDefault' => $location->attributes()->isDefault == 'Y',
+                'isDefault' => $location->attributes()->isDefault === 'Y',
             ];
         }
         return $locations;
@@ -3155,13 +3155,13 @@ class VoyagerRestful extends Voyager implements
             'http://www.endinfosys.com/Voyager/requests'
         );
         foreach ($response->xpath('//ser:message') as $message) {
-            if ($message->attributes()->type == 'success') {
+            if ($message->attributes()->type === 'success') {
                 return [
                     'success' => true,
                     'status' => 'ill_request_place_success',
                 ];
             }
-            if ($message->attributes()->type == 'system') {
+            if ($message->attributes()->type === 'system') {
                 return $this->holdError('ill_request_error_technical');
             }
         }
@@ -3218,7 +3218,7 @@ class VoyagerRestful extends Voyager implements
                  'circulationActions' => 'requests',
             ];
             // An UB request is
-            if ($type == 'C') {
+            if ($type === 'C') {
                 $hierarchy['callslips'] = $cancelID;
             } else {
                 $hierarchy['holds'] = $cancelID;
@@ -3238,13 +3238,13 @@ class VoyagerRestful extends Voyager implements
                 $cancel = $cancel->children();
                 $node = 'reply-text';
                 $reply = (string)$cancel->$node;
-                $count = ($reply == 'ok') ? $count + 1 : $count;
+                $count = ($reply === 'ok') ? $count + 1 : $count;
 
                 $response[$itemId] = [
-                    'success' => $reply == 'ok',
-                    'status' => ($reply == 'ok')
+                    'success' => $reply === 'ok',
+                    'status' => ($reply === 'ok')
                         ? 'ill_request_cancel_success' : 'ill_request_cancel_fail',
-                    'sysMessage' => ($reply == 'ok') ? false : $reply,
+                    'sysMessage' => ($reply === 'ok') ? false : $reply,
                 ];
             } else {
                 $response[$itemId] = [
@@ -3429,7 +3429,7 @@ class VoyagerRestful extends Voyager implements
     public function supportsMethod($method, $params)
     {
         // Special case: change password is only available if properly configured.
-        if ($method == 'changePassword') {
+        if ($method === 'changePassword') {
             return isset($this->config['changePassword']);
         }
         return is_callable([$this, $method]);

@@ -84,7 +84,7 @@ class FacetFormatter extends BaseFormatter
         array_walk_recursive(
             $facet,
             function ($item, $key) use (&$discard, $filters): void {
-                if ($discard && $key == 'value') {
+                if ($discard && $key === 'value') {
                     foreach ($filters as $filter) {
                         $pattern = '/' . addcslashes($filter, '/') . '/';
                         if (preg_match($pattern, $item) === 1) {
@@ -123,7 +123,7 @@ class FacetFormatter extends BaseFormatter
                 if (!in_array($key, $fields)) {
                     continue;
                 }
-                if ($key == 'children') {
+                if ($key === 'children') {
                     if (!empty($item)) {
                         $resultValue[$key]
                             = $this->buildFacetValues(
@@ -132,7 +132,7 @@ class FacetFormatter extends BaseFormatter
                             );
                     }
                 } else {
-                    if ($key == 'displayText') {
+                    if ($key === 'displayText') {
                         $key = 'translated';
                     }
                     $resultValue[$key] = $item;

@@ -143,7 +143,7 @@ class SearchBox implements \Psr\Log\LoggerAwareInterface, \VuFind\I18n\Translato
             $type = $settings['type'][$i];
             $target = $settings['target'][$i];
 
-            if ($type == 'VuFind') {
+            if ($type === 'VuFind') {
                 $options = $this->getOptionsForTarget($target);
                 if ($options->autocompleteEnabled()) {
                     return true;
@@ -531,7 +531,7 @@ class SearchBox implements \Psr\Log\LoggerAwareInterface, \VuFind\I18n\Translato
             $target = $settings['target'][$i];
             $label = $settings['label'][$i];
 
-            if ($type == 'VuFind') {
+            if ($type === 'VuFind') {
                 $j = 0;
                 try {
                     $options = $this->getOptionsForTarget($target);
@@ -593,7 +593,7 @@ class SearchBox implements \Psr\Log\LoggerAwareInterface, \VuFind\I18n\Translato
                         $this->getAlphabrowseHandlers($activeHandler, !empty($label))
                     );
                 }
-            } elseif ($type == 'External') {
+            } elseif ($type === 'External') {
                 $handlers[] = [
                     'value' => $type . ':' . $target, 'label' => $label,
                     'indent' => false, 'selected' => false,

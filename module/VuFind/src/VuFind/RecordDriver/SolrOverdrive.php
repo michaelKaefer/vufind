@@ -346,7 +346,7 @@ class SolrOverdrive extends SolrMarc implements LoggerAwareInterface
                 $result->data = [];
                 $result->isMagazine = false;
                 foreach ($checkouts as $checkout) {
-                    if ($checkout->metadata->mediaType == 'Magazine') {
+                    if ($checkout->metadata->mediaType === 'Magazine') {
                         $idToCheck = strtolower($checkout->metadata->parentMagazineReferenceId);
                     } else {
                         $idToCheck = $checkout->reserveId;
@@ -356,7 +356,7 @@ class SolrOverdrive extends SolrMarc implements LoggerAwareInterface
                         $result->status = true;
                         $result->data[] = $checkout;
                         //this checkout is a magazine issue of the current title
-                        if ($checkout->metadata->mediaType == 'Magazine') {
+                        if ($checkout->metadata->mediaType === 'Magazine') {
                             $result->isMagazine =  true;
                         }
                     }

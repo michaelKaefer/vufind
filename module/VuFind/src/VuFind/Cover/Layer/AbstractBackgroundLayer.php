@@ -76,7 +76,7 @@ abstract class AbstractBackgroundLayer extends AbstractLayer
     protected function getAccentColor($im, $seed, $settings)
     {
         // Number to color, hsb to control saturation and lightness
-        return $settings->accentColor == 'random'
+        return $settings->accentColor === 'random'
             ? $this->getHSBColor(
                 $im,
                 $seed % 256,

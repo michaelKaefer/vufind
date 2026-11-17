@@ -315,7 +315,7 @@ abstract class AbstractRequestBase extends AbstractPlugin
 
         // Process special "driver" prefix and adjust default date
         // settings accordingly:
-        if ($dateArray[0] == 'driver') {
+        if ($dateArray[0] === 'driver') {
             $useDriver = true;
             array_shift($dateArray);
             if (count($dateArray) < 3) {

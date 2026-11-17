@@ -345,9 +345,9 @@ class Symphony extends AbstractBase implements LoggerAwareInterface
                 // Try the request again with the new SoapHeader.
                 $soapClient->__setSoapHeaders($header);
                 return $soapClient->$operation($parameters);
-            } elseif ($operation == 'logoutUser') {
+            } elseif ($operation === 'logoutUser') {
                 return null;
-            } elseif ($operation == 'lookupSessionInfo') {
+            } elseif ($operation === 'lookupSessionInfo') {
                 // lookupSessionInfo did not exist in SymWS 3.0.
                 $this->checkSymwsVersion();
                 throw $e;
@@ -423,7 +423,7 @@ class Symphony extends AbstractBase implements LoggerAwareInterface
                     $home_loc;
 
                 $available = (empty($curr_loc) || $curr_loc == $home_loc)
-                    || $result['circulate flag'] == 'Y';
+                    || $result['circulate flag'] === 'Y';
                 $callnumber = $result['call number'];
                 $location   = $library . ' - ' . ($available && !empty($curr_loc)
                     ? $curr_loc : $home_loc);
@@ -846,7 +846,7 @@ class Symphony extends AbstractBase implements LoggerAwareInterface
                     'reserve' => 'N',
                     'number' => $i,
                     'barcode' => true,
-                    'offsite' => $library_id == 'OFFSITE',
+                    'offsite' => $library_id === 'OFFSITE',
                 ];
             }
         }
@@ -1144,7 +1144,7 @@ class Symphony extends AbstractBase implements LoggerAwareInterface
                     : [$resp->patronAddressInfo->$AddressNInfo];
                 foreach ($addrinfos as $addrinfo) {
                     if (
-                        $addrinfo->addressPolicyID == 'EMAIL'
+                        $addrinfo->addressPolicyID === 'EMAIL'
                         && !empty($addrinfo->addressValue)
                     ) {
                         $email = $addrinfo->addressValue;

@@ -508,7 +508,7 @@ class Options extends AbstractEDSOptions
                     ];
                     if (
                         isset($mode['DefaultOn'])
-                        && 'y' == $mode['DefaultOn']
+                        && 'y' === $mode['DefaultOn']
                     ) {
                         $this->defaultMode = $mode['Mode'];
                     }
@@ -525,7 +525,7 @@ class Options extends AbstractEDSOptions
                     ];
                     if (
                         isset($expander['DefaultOn'])
-                        && 'y' == $expander['DefaultOn']
+                        && 'y' === $expander['DefaultOn']
                     ) {
                         $this->defaultExpanders[] = $expander['Id'];
                     }
@@ -537,7 +537,7 @@ class Options extends AbstractEDSOptions
             if (isset($availCriteria['AvailableLimiters'])) {
                 foreach ($availCriteria['AvailableLimiters'] as $limiter) {
                     $val = '';
-                    if ('select' == $limiter['Type']) {
+                    if ('select' === $limiter['Type']) {
                         $val = 'y';
                     }
                     $this->limiterOptions[$limiter['Id']] = [
@@ -701,7 +701,7 @@ class Options extends AbstractEDSOptions
                     'eds_limiter_' . $key,
                     $limiter['Label']
                 ),
-                'selected' => 'y' == $limiter['DefaultOn'],
+                'selected' => 'y' === $limiter['DefaultOn'],
             ];
         }
         return $ssLimiterOptions;
@@ -747,7 +747,7 @@ class Options extends AbstractEDSOptions
             //limiters
             $limiters = $this->getAvailableLimiters();
             foreach ($limiters as $key => $value) {
-                if ('select' == $value['Type'] && 'y' == $value['DefaultOn']) {
+                if ('select' === $value['Type'] && 'y' === $value['DefaultOn']) {
                     // only select limiters can be defaulted on limiters can be
                     // defaulted
                     $val = $value['LimiterValues'][0]['Value'];

@@ -589,11 +589,11 @@ abstract class AbstractBase implements
         }
         if (!empty($policy['pattern'])) {
             $valid = true;
-            if ($policy['pattern'] == 'numeric') {
+            if ($policy['pattern'] === 'numeric') {
                 if (!ctype_digit($string)) {
                     $valid = false;
                 }
-            } elseif ($policy['pattern'] == 'alphanumeric') {
+            } elseif ($policy['pattern'] === 'alphanumeric') {
                 if (preg_match('/[^\da-zA-Z]/', $string)) {
                     $valid = false;
                 }

@@ -206,9 +206,9 @@ class OverdriveConnector implements
     public function isContentActive()
     {
         $config = $this->getConfig();
-        if ($config->showMyContent == 'always') {
+        if ($config->showMyContent === 'always') {
             return true;
-        } elseif ($config->showMyContent == 'never') {
+        } elseif ($config->showMyContent === 'never') {
             return false;
         } else {
             // assume that it is accessOnly
@@ -252,7 +252,7 @@ class OverdriveConnector implements
             $availabilityUrl .= "$overDriveId/availability";
             $res = $this->callUrl($availabilityUrl);
 
-            if (($res->errorCode ?? '') == 'NotFound') {
+            if (($res->errorCode ?? '') === 'NotFound') {
                 if ($conf->consortiumSupport && !$this->getUser()) {
                     // Consortium support is turned on but user is not logged in;
                     // if the title is not found it probably means that it's only
@@ -322,7 +322,7 @@ class OverdriveConnector implements
             if (!$res) {
                 $result->code = 'od_code_connection_failed';
             } else {
-                if (($res->errorCode ?? null) == 'NotFound' || $res->totalItems == 0) {
+                if (($res->errorCode ?? null) === 'NotFound' || $res->totalItems == 0) {
                     if ($loginRequired) {
                         // Consortium support is turned on but user is not logged in.
                         // If the title is not found it could mean that it's only
@@ -611,7 +611,7 @@ class OverdriveConnector implements
                 'emailAddress' => $email,
                 'suspensionType' => $suspensionType,
             ];
-            if ($suspensionType == 'limited') {
+            if ($suspensionType === 'limited') {
                 $params['numberOfDays'] = $numberOfDays;
             }
 
@@ -667,7 +667,7 @@ class OverdriveConnector implements
                 'emailAddress' => $email,
                 'suspensionType' => $suspensionType,
             ];
-            if ($suspensionType == 'limited') {
+            if ($suspensionType === 'limited') {
                 $params['numberOfDays'] = $numberOfDays;
             }
 
@@ -1269,7 +1269,7 @@ class OverdriveConnector implements
                             $result->data[$key]->holdSuspension = $hold->holdSuspension ?? false;
                             // check if ready for checkout
                             foreach (array_keys($hold->actions) as $action) {
-                                if ($action == 'checkout') {
+                                if ($action === 'checkout') {
                                     $result->data[$key]->holdReadyForCheckout = true;
                                     // format the expires date.
                                     $holdExpires = new \DateTime($hold->holdExpires);
@@ -1537,7 +1537,7 @@ class OverdriveConnector implements
 
             // if all goes well for DELETE, the code will be 204
             // and response is empty.
-            if ($requestType == 'DELETE' || $requestType == 'PUT') {
+            if ($requestType === 'DELETE' || $requestType === 'PUT') {
                 if ($response->getStatusCode() == 204) {
                     return true;
                 } else {
@@ -1549,10 +1549,10 @@ class OverdriveConnector implements
                 }
             }
 
-            if ($returnType == 'body') {
+            if ($returnType === 'body') {
                 // probably need to check for return status
                 return $body;
-            } elseif ($returnType == 'redirect') {
+            } elseif ($returnType === 'redirect') {
                 $headers = $response->getHeaders();
                 if ($headers->has('location')) {
                     $loc = $headers->get('location');

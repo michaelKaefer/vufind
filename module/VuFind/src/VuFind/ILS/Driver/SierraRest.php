@@ -1154,7 +1154,7 @@ class SierraRest extends AbstractBase implements
             $title = '';
             $volume = '';
             $publicationYear = '';
-            if ($entry['recordType'] == 'i') {
+            if ($entry['recordType'] === 'i') {
                 $itemId = $this->extractId($entry['record']);
                 // Fetch bib ID from item
                 $item = $items[$itemId] ?? [];
@@ -1162,7 +1162,7 @@ class SierraRest extends AbstractBase implements
                     $bibId = $item['bibIds'][0];
                 }
                 $volume = $this->extractVolume($item);
-            } elseif ($entry['recordType'] == 'b') {
+            } elseif ($entry['recordType'] === 'b') {
                 $bibId = $this->extractId($entry['record']);
             }
             if (!empty($bibId)) {
@@ -1532,7 +1532,7 @@ class SierraRest extends AbstractBase implements
         $comment = $holdDetails['comment'] ?? '';
         $bibId = $this->extractBibId($holdDetails['id']);
 
-        if ($level == 'copy' && empty($itemId)) {
+        if ($level === 'copy' && empty($itemId)) {
             throw new ILSException("Hold level is 'copy', but item ID is empty");
         }
 
@@ -1542,8 +1542,8 @@ class SierraRest extends AbstractBase implements
         }
 
         $request = [
-            'recordType' => $level == 'copy' ? 'i' : 'b',
-            'recordNumber' => (int)($level == 'copy' ? $itemId : $bibId),
+            'recordType' => $level === 'copy' ? 'i' : 'b',
+            'recordNumber' => (int)($level === 'copy' ? $itemId : $bibId),
             'pickupLocation' => $pickUpLocation,
         ];
         if (!empty($holdDetails['requiredByTS'])) {
@@ -2035,14 +2035,14 @@ class SierraRest extends AbstractBase implements
     public function supportsMethod($method, $params)
     {
         // Changing password is only available if properly configured.
-        if ($method == 'changePassword') {
+        if ($method === 'changePassword') {
             return isset($this->config['changePassword']);
         }
         // Loan history is only available if properly configured
-        if ($method == 'getMyTransactionHistory') {
+        if ($method === 'getMyTransactionHistory') {
             return !empty($this->config['TransactionHistory']['enabled']);
         }
-        if ($method == 'purgeTransactionHistory') {
+        if ($method === 'purgeTransactionHistory') {
             return !empty($this->config['TransactionHistory']['enabled'])
                 && $this->apiVersion >= 6;
         }
@@ -2072,7 +2072,7 @@ class SierraRest extends AbstractBase implements
     protected function extractVolume($item)
     {
         foreach ($item['varFields'] ?? [] as $varField) {
-            if ($varField['fieldTag'] == 'v') {
+            if ($varField['fieldTag'] === 'v') {
                 // Depending on Sierra version/configuration, the content may be in a couple
                 // of different places. This logic checks both possibilities.
                 return trim($varField['subfields'][0]['content'] ?? $varField['content'] ?? '');
@@ -2209,7 +2209,7 @@ class SierraRest extends AbstractBase implements
         $client = $this->createHttpClient($apiUrl);
 
         // Add params
-        if ($method == 'GET') {
+        if ($method === 'GET') {
             $client->setParameterGet($params);
         } else {
             if (is_string($params)) {
@@ -2240,7 +2240,7 @@ class SierraRest extends AbstractBase implements
         try {
             $response = $client->setMethod($method)->send();
         } catch (\Exception $e) {
-            $params = $method == 'GET'
+            $params = $method === 'GET'
                 ? $client->getRequest()->getQuery()->toString()
                 : $client->getRequest()->getPost()->toString();
             $this->error(
@@ -2273,7 +2273,7 @@ class SierraRest extends AbstractBase implements
         // valid JSON that the caller can handle
         $decodedResult = json_decode($result, true);
         if (!$response->isSuccess() && null === $decodedResult) {
-            $params = $method == 'GET'
+            $params = $method === 'GET'
                 ? $client->getRequest()->getQuery()->toString()
                 : $client->getRequest()->getPost()->toString();
             $this->error(
@@ -2438,7 +2438,7 @@ class SierraRest extends AbstractBase implements
             $passwordField => $patron['cat_password'],
         ];
         foreach ($doc->getElementsByTagName('input') as $input) {
-            if ($input->getAttribute('type') == 'hidden') {
+            if ($input->getAttribute('type') === 'hidden') {
                 $postParams[$input->getAttribute('name')]
                     = $input->getAttribute('value');
             }

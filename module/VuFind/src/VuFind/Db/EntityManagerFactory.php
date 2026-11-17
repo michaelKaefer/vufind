@@ -92,10 +92,10 @@ class EntityManagerFactory implements \Laminas\ServiceManager\Factory\FactoryInt
             __DIR__ . '/Entity',
         ];
 
-        $isDevMode = APPLICATION_ENV == 'development';
+        $isDevMode = APPLICATION_ENV === 'development';
         $config = ORMSetup::createAttributeMetadataConfig($paths, $isDevMode, cache: $this->getCache($container));
         $config->setClassMetadataFactoryName(ClassMetadataFactory::class);
-        $config->setProxyDir(LOCAL_CACHE_DIR . (PHP_SAPI == 'cli' ? '/cli' : '') . '/doctrine-proxies');
+        $config->setProxyDir(LOCAL_CACHE_DIR . (PHP_SAPI === 'cli' ? '/cli' : '') . '/doctrine-proxies');
         $config->setProxyNamespace('DoctrineProxies');
         $config->setAutoGenerateProxyClasses(
             $isDevMode ? ProxyFactory::AUTOGENERATE_ALWAYS : ProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS_OR_CHANGED

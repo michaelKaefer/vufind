@@ -1023,7 +1023,7 @@ class MultiBackend extends AbstractMultiDriver
      */
     public function supportsMethod(string $method, array $params)
     {
-        if ($method == 'getLoginDrivers' || $method == 'getDefaultLoginDriver') {
+        if ($method === 'getLoginDrivers' || $method === 'getDefaultLoginDriver') {
             return true;
         }
 

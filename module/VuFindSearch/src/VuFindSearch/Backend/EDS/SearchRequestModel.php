@@ -302,7 +302,7 @@ class SearchRequestModel implements LoggerAwareInterface
             foreach ($this->facetFilters as $field => $values) {
                 $values = array_map(fn ($value) => static::escapeSpecialCharacters($value), $values);
                 $operator = $this->facetOperators[$field];
-                if ('OR' == $operator) {
+                if ('OR' === $operator) {
                     $valuesString = implode(',', array_map(fn ($value) => "{$field}:{$value}", $values));
                     $qs['facetfilter'][] = "{$filterId},{$valuesString}";
                     $filterId++;
@@ -388,7 +388,7 @@ class SearchRequestModel implements LoggerAwareInterface
             $json->SearchCriteria->FacetFilters = [];
             $id = 1;
             foreach ($this->facetFilters as $field => $values) {
-                if ('OR' == $this->facetOperators[$field]) {
+                if ('OR' === $this->facetOperators[$field]) {
                     $filterObj = new \stdClass();
                     $filterObj->FilterId = $id++;
                     $filterObj->FacetValues = [];

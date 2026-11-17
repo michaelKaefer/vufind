@@ -70,7 +70,7 @@ class IllRequestsHelper extends AbstractRequestBase
     ): array {
         // Generate form details for cancelling requests if enabled
         if ($cancelStatus) {
-            if ($cancelStatus['function'] == 'getCancelILLRequestsLink') {
+            if ($cancelStatus['function'] === 'getCancelILLRequestsLink') {
                 // Build OPAC URL
                 $ilsDetails['cancel_link'] = $catalog->getCancelILLRequestLink($ilsDetails, $patron);
             } else {

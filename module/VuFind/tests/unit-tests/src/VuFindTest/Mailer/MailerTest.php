@@ -102,8 +102,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message): bool {
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'from@example.com' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $mailer->send('to@example.com', 'from@example.com', 'subject', 'body');
@@ -119,8 +119,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message): bool {
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && '"Sender TextName" <from@example.com>' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $address = new Address('from@example.com', 'Sender TextName');
@@ -137,8 +137,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message): bool {
             return '"Recipient TextName" <to@example.com>' == $message->getTo()[0]->toString()
                 && 'from@example.com' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $address = new Address('to@example.com', 'Recipient TextName');
@@ -155,8 +155,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message): bool {
             return '"Recipient TextName" <to@example.com>' == $message->getTo()[0]->toString()
                 && 'from@example.com' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $list = [
@@ -176,8 +176,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'me@example.com' == $message->getReplyTo()[0]->toString()
                 && '"me" <no-reply@example.com>' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $mailer->setFromAddressOverride('no-reply@example.com');
@@ -196,8 +196,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'reply-to@example.com' == $message->getReplyTo()[0]->toString()
                 && 'me@example.com' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $address = new Address('me@example.com');
@@ -217,8 +217,8 @@ class MailerTest extends \PHPUnit\Framework\TestCase
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'reply-to@example.com' == $message->getReplyTo()[0]->toString()
                 && '"me" <no-reply@example.com>' == $fromString
-                && 'body' == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'body' === $message->getBody()->getBody()
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $mailer->setFromAddressOverride('no-reply@example.com');
@@ -236,7 +236,7 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message): bool {
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'from@example.com' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
+                && 'body' === $message->getBody()->getBody()
                 && 'overridden subject' == $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
@@ -268,7 +268,7 @@ class MailerTest extends \PHPUnit\Framework\TestCase
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'from@example.com' == $message->getFrom()[0]->toString()
                 && $body == $message->getBody()->getBody()
-                && 'subject' == $message->getSubject();
+                && 'subject' === $message->getSubject();
         };
         $mailer = $this->getMailer($callback);
         $mailer->send(
@@ -435,7 +435,7 @@ class MailerTest extends \PHPUnit\Framework\TestCase
                 && 2 == count($to)
                 && 'from@example.com' == $message->getFrom()[0]->toString()
                 && 'cc@example.com' == $message->getCc()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
+                && 'body' === $message->getBody()->getBody()
                 && 'Library Catalog Search Result' == $message->getSubject();
         };
         $mailer = $this->getMailer($callback, $renderer);
@@ -484,7 +484,7 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message): bool {
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && 'from@example.com' == $message->getFrom()[0]->toString()
-                && 'body' == $message->getBody()->getBody()
+                && 'body' === $message->getBody()->getBody()
                 && 'Library Catalog Record: breadcrumb' == $message->getSubject();
         };
         $mailer = $this->getMailer($callback, $templateRenderer);
@@ -504,7 +504,7 @@ class MailerTest extends \PHPUnit\Framework\TestCase
         $callback = function ($message) use ($html, $text): bool {
             return 'to@example.com' == $message->getTo()[0]->toString()
                 && '"Sender TextName" <from@example.com>' == $message->getFrom()[0]->toString()
-                && 'subject' == $message->getSubject()
+                && 'subject' === $message->getSubject()
                 && str_contains($message->getBody()->getParts()[0]->getBody(), $text)
                 && str_contains($message->getBody()->getParts()[1]->getBody(), $html);
         };

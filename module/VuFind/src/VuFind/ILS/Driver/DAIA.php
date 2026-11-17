@@ -608,13 +608,13 @@ class DAIA extends AbstractBase implements
     protected function extractDaiaDoc($id, $daiaResponse)
     {
         $docs = [];
-        if ($this->daiaResponseFormat == 'xml') {
+        if ($this->daiaResponseFormat === 'xml') {
             try {
                 $docs = $this->convertDaiaXmlToJson($daiaResponse);
             } catch (\Exception $e) {
                 $this->throwAsIlsException($e);
             }
-        } elseif ($this->daiaResponseFormat == 'json') {
+        } elseif ($this->daiaResponseFormat === 'json') {
             $docs = json_decode($daiaResponse, true);
         }
 
@@ -848,7 +848,7 @@ class DAIA extends AbstractBase implements
                     // openaccess
                     $availability = true;
                     if (
-                        $available['service'] == 'loan'
+                        $available['service'] === 'loan'
                         && isset($available['href'])
                     ) {
                         // save the link to the ils if we have a href for loan
@@ -893,7 +893,7 @@ class DAIA extends AbstractBase implements
                     )
                 ) {
                     if (
-                        $unavailable['service'] == 'loan'
+                        $unavailable['service'] === 'loan'
                         && isset($unavailable['href'])
                     ) {
                         //save the link to the ils if we have a href for loan service

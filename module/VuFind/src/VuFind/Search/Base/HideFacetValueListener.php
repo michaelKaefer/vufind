@@ -94,7 +94,7 @@ class HideFacetValueListener
             return $event;
         }
         $context = $command->getContext();
-        if ($context == 'search' || $context == 'retrieve') {
+        if ($context === 'search' || $context === 'retrieve') {
             $this->processHideFacetValue($event);
         }
         return $event;

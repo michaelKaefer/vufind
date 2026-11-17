@@ -181,7 +181,7 @@ class Alma extends AbstractBase implements
             // also with e.g. POST requests)
             $client->setParameterGet($paramsGet);
             // Set POST parameters
-            if ($method == 'POST') {
+            if ($method === 'POST') {
                 $client->setParameterPost($paramsPost);
             }
 
@@ -1196,9 +1196,9 @@ class Alma extends AbstractBase implements
             !empty($params['sort']) ? $params['sort'] : 'checkout desc',
             2
         );
-        if ($sort[0] == 'checkout') {
+        if ($sort[0] === 'checkout') {
             $sortKey = 'loan_date';
-        } elseif ($sort[0] == 'title') {
+        } elseif ($sort[0] === 'title') {
             $sortKey = 'title';
         } else {
             $sortKey = 'due_date';
@@ -1242,7 +1242,7 @@ class Alma extends AbstractBase implements
                 //$loan['volume'] = ;
                 $loan['publication_year'] = (string)$itemLoan->publication_year;
                 $loan['renewable']
-                    = strtolower((string)$itemLoan->renewable) == 'true';
+                    = strtolower((string)$itemLoan->renewable) === 'true';
                 //$loan['message'] = ;
                 $loan['title'] = (string)$itemLoan->title;
                 $loan['item_id'] = (string)$itemLoan->loan_id;
@@ -1407,7 +1407,7 @@ class Alma extends AbstractBase implements
      */
     public function getConfig(string $function, array $params = []): array
     {
-        if ($function == 'patronLogin') {
+        if ($function === 'patronLogin') {
             return [
                 'loginMethod' => $this->config['Catalog']['loginMethod'] ?? 'vufind',
             ];

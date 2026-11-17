@@ -59,7 +59,7 @@ class Params extends \VuFind\Search\Solr\Params
         $this->setFacetLimit($this->getLimit() * 10);
         // Sorting - defaults to off with unlimited facets, so let's
         //           be explicit here for simplicity.
-        if ($this->getSort() == 'author') {
+        if ($this->getSort() === 'author') {
             $this->setFacetSort('index');
         } else {
             $this->setFacetSort('count');

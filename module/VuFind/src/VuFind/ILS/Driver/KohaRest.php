@@ -904,7 +904,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
                 $volume = $item['serial_issue_number'];
             }
             $available = !empty($entry['waiting_date']);
-            $inTransit = !empty($entry['status']) && $entry['status'] == 'T';
+            $inTransit = !empty($entry['status']) && $entry['status'] === 'T';
             $requestId = $entry['hold_id'];
             $cancelDetails
                 = ($available || ($inTransit && !$this->allowCancelInTransit))
@@ -1285,7 +1285,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
         $comment = $holdDetails['comment'] ?? '';
         $bibId = $holdDetails['id'];
 
-        if ($level == 'copy' && empty($itemId)) {
+        if ($level === 'copy' && empty($itemId)) {
             throw new ILSException("Hold level is 'copy', but item ID is empty");
         }
 
@@ -1303,7 +1303,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
                         ? gmdate('Y-m-d', $holdDetails['requiredByTS'])
                         : null,
         ];
-        if ($level == 'copy') {
+        if ($level === 'copy') {
             $request['item_id'] = (int)$itemId;
         }
 
@@ -1644,7 +1644,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
             'issue' => $details['issue'] ?? '',
             'date' => $details['year'] ?? '',
         ];
-        if ($level == 'copy') {
+        if ($level === 'copy') {
             $request['item_id'] = (int)$itemId;
         }
 
@@ -2035,7 +2035,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
     public function supportsMethod($method, $params)
     {
         // Special case: change password is only available if properly configured.
-        if ($method == 'changePassword') {
+        if ($method === 'changePassword') {
             return isset($this->config['changePassword']);
         }
         return is_callable([$this, $method]);
@@ -2185,7 +2185,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
         $result = $response->getBody();
 
         $fullUrl = $apiUrl;
-        if ($method == 'GET') {
+        if ($method === 'GET') {
             $fullUrl .= '?' . $client->getRequest()->getQuery()->toString();
         }
         $this->debug(
@@ -2202,7 +2202,7 @@ class KohaRest extends \VuFind\ILS\Driver\AbstractBase implements
             && (null === $decodedResult || !empty($decodedResult['error'])
             || !empty($decodedResult['errors']))
         ) {
-            $params = $method == 'GET'
+            $params = $method === 'GET'
                 ? $client->getRequest()->getQuery()->toString()
                 : $client->getRequest()->getPost()->toString();
             $this->logError(

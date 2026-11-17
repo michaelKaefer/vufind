@@ -112,7 +112,7 @@ class EditCardAction extends AbstractTemplateRenderingAction
         }
 
         $id = $this->getRouteParam('id') ?? $this->getQueryParam('id');
-        $card = $this->userCardService->getOrCreateLibraryCard($user, $id == 'NEW' ? null : $id);
+        $card = $this->userCardService->getOrCreateLibraryCard($user, $id === 'NEW' ? null : $id);
 
         $target = null;
         $username = $card->getCatUsername();
@@ -167,7 +167,7 @@ class EditCardAction extends AbstractTemplateRenderingAction
         }
 
         // Check the credentials if the username is changed or a new password is entered:
-        $card = $this->userCardService->getOrCreateLibraryCard($user, $id == 'NEW' ? null : $id);
+        $card = $this->userCardService->getOrCreateLibraryCard($user, $id === 'NEW' ? null : $id);
         if ($card->getCatUsername() !== $username || trim($password)) {
             // Connect to the ILS and check that the credentials are correct:
             $loginMethod = $this->getHelper(LoginHelper::class)->getILSLoginMethod($target);
@@ -238,7 +238,7 @@ class EditCardAction extends AbstractTemplateRenderingAction
         try {
             $this->userCardService->persistLibraryCardData(
                 $user,
-                $id == 'NEW' ? null : $id,
+                $id === 'NEW' ? null : $id,
                 $cardName,
                 $username,
                 $password

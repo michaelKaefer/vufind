@@ -824,7 +824,7 @@ class Form implements \VuFind\I18n\Translator\TranslatorAwareInterface
                 $senderEmail = null;
             }
 
-            if ($elementType == 'textarea') {
+            if ($elementType === 'textarea') {
                 $element['settings']['rows'] ??= 8;
             }
 

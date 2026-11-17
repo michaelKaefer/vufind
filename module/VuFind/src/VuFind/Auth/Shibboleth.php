@@ -210,7 +210,7 @@ class Shibboleth extends AbstractBase
         foreach ($this->attribsToCheck as $attribute) {
             if (isset($shib[$attribute])) {
                 $value = $this->getAttribute($request, $shib[$attribute]);
-                if ($attribute == 'email' && !empty($value)) {
+                if ($attribute === 'email' && !empty($value)) {
                     $userService->updateUserEmail($user, $value);
                 } elseif (
                     $attribute == 'cat_username' && isset($shib['prefix'])

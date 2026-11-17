@@ -291,7 +291,7 @@ class Params extends \VuFind\Search\Base\Params
                     $facetSet["f.{$facetField}.facet.range.gap"] = '+1YEAR';
                     $facetSet['range'][] = $facetField;
                 } else {
-                    if ($this->getFacetOperator($facetField) == 'OR') {
+                    if ($this->getFacetOperator($facetField) === 'OR') {
                         $facetField = '{!ex=' . $facetField . '_filter}' . $facetField;
                     }
                     $facetSet['field'][] = $facetField;

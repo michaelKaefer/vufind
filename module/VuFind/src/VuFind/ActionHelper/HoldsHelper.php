@@ -70,7 +70,7 @@ class HoldsHelper extends AbstractRequestBase
         // Generate Form Details for cancelling Holds if Cancelling Holds
         // is enabled
         if ($cancelStatus) {
-            if ($cancelStatus['function'] == 'getCancelHoldLink') {
+            if ($cancelStatus['function'] === 'getCancelHoldLink') {
                 // Build OPAC URL
                 $ilsDetails['cancel_link'] = $catalog->getCancelHoldLink($ilsDetails, $patron);
             } elseif (isset($ilsDetails['cancel_details'])) {

@@ -78,7 +78,7 @@ trait CatchIlsExceptionsTrait
             // Always display generic message:
             $this->getFlashMessenger()->addErrorMessage('ils_connection_failed');
             // In development mode, also show technical failure message:
-            if ('development' == APPLICATION_ENV) {
+            if ('development' === APPLICATION_ENV) {
                 $this->getFlashMessenger()->addErrorMessage($exception->getMessage());
             }
             $actionResponse = $this->ilsExceptionResponse ?? $this->createViewModel();

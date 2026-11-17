@@ -67,7 +67,7 @@ class StorageRetrievalRequestsHelper extends AbstractRequestBase
     ): array {
         // Generate form details for cancelling requests if enabled
         if ($cancelStatus) {
-            if ($cancelStatus['function'] == 'getCancelStorageRetrievalRequestsLink') {
+            if ($cancelStatus['function'] === 'getCancelStorageRetrievalRequestsLink') {
                 // Build OPAC URL
                 $ilsDetails['cancel_link'] = $catalog->getCancelStorageRetrievalRequestLink($ilsDetails, $patron);
             } else {

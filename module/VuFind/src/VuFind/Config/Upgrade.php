@@ -473,7 +473,7 @@ class Upgrade implements LoggerAwareInterface
         }
         if (
             isset($newConfig['Content']['recordMap'])
-            && 'google' == strtolower($newConfig['Content']['recordMap'])
+            && 'google' === strtolower($newConfig['Content']['recordMap'])
         ) {
             unset($newConfig['Content']['recordMap']);
             unset($newConfig['Content']['googleMapApiKey']);
@@ -575,10 +575,10 @@ class Upgrade implements LoggerAwareInterface
         }
 
         // Translate legacy auth settings:
-        if (strtolower($newConfig['Authentication']['method']) == 'db') {
+        if (strtolower($newConfig['Authentication']['method']) === 'db') {
             $newConfig['Authentication']['method'] = 'Database';
         }
-        if (strtolower($newConfig['Authentication']['method']) == 'sip') {
+        if (strtolower($newConfig['Authentication']['method']) === 'sip') {
             $newConfig['Authentication']['method'] = 'SIP2';
         }
 
@@ -586,7 +586,7 @@ class Upgrade implements LoggerAwareInterface
         $newConfig['Session']['type'] = ucwords(
             str_replace('session', '', strtolower($newConfig['Session']['type']))
         );
-        if ($newConfig['Session']['type'] == 'Mysql') {
+        if ($newConfig['Session']['type'] === 'Mysql') {
             $newConfig['Session']['type'] = 'Database';
         }
 

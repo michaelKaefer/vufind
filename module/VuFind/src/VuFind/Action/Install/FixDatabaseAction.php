@@ -129,7 +129,7 @@ class FixDatabaseAction extends AbstractInstallAction
             'driver' => $this->getPostParam('driver', 'mysql'),
         ];
 
-        $skip = $this->getPostParam('printsql') == 'Skip';
+        $skip = $this->getPostParam('printsql') === 'Skip';
 
         $flashMessagesHelper = $this->getHelper(FlashMessagesHelper::class);
         if (!preg_match('/^\w*$/', $dbSettings['dbname'])) {

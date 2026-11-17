@@ -547,7 +547,7 @@ class Loader extends \VuFind\ImageLoader
             // include a special case for jpg vs. jpeg:
             $format = substr($iconFile, -3);
             $this->contentType
-                = 'image/' . ($format == 'jpg' ? 'jpeg' : $format);
+                = 'image/' . ($format === 'jpg' ? 'jpeg' : $format);
             $this->image = file_get_contents($iconFile);
             return true;
         }

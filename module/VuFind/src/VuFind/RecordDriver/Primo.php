@@ -273,7 +273,7 @@ class Primo extends DefaultRecord
             $retVal[] = [];
             $retVal[0]['url'] = $this->fields['url'];
             if (isset($this->fields['fulltext'])) {
-                $desc = $this->fields['fulltext'] == 'fulltext'
+                $desc = $this->fields['fulltext'] === 'fulltext'
                     ? 'Get full text' : 'Request full text';
                 $retVal[0]['desc'] = $this->translate($desc);
             }

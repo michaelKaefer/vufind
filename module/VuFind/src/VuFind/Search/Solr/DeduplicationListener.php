@@ -119,7 +119,7 @@ class DeduplicationListener
                     && !$this->hasChildFilter($params)
                 ) {
                     $fq = '-merged_child_boolean:true';
-                    if ($context == 'similar' && $id = $event->getParam('id')) {
+                    if ($context === 'similar' && $id = $event->getParam('id')) {
                         $fq .= ' AND -local_ids_str_mv:"'
                             . addcslashes($id, '"') . '"';
                     }

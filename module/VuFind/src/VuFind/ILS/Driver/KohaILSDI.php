@@ -593,7 +593,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
                 // AND no pickupLocations are defined either
                 if (
                     isset($holdDetails['item_id']) && (empty($holdDetails['level'])
-                    || $holdDetails['level'] == 'item')
+                    || $holdDetails['level'] === 'item')
                 ) {
                     // We try to get the actual branchcode the item is found at
                     $item_id = $holdDetails['item_id'];
@@ -610,7 +610,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
                     }
                 } elseif (
                     !empty($holdDetails['level'])
-                    && $holdDetails['level'] == 'title'
+                    && $holdDetails['level'] === 'title'
                 ) {
                     // We try to get the actual branchcodes the title is found at
                     $id = $holdDetails['id'];
@@ -743,7 +743,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
             ];
         }
 
-        if ($level == 'title') {
+        if ($level === 'title') {
             $rqString = "HoldTitle&patron_id=$patron_id&bib_id=$bib_id"
                 . "&request_location=$request_location"
                 . "&pickup_location=$pickup_location";
@@ -757,7 +757,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
 
         $rsp = $this->makeRequest($rqString . $dateString);
 
-        if ($rsp->{'code'} == 'IllegalParameter' && $dateString != '') {
+        if ($rsp->{'code'} === 'IllegalParameter' && $dateString != '') {
             // In older versions of Koha, the date parameters were named differently
             // and even never implemented, so if we got IllegalParameter, we know
             // the Koha version is before 20.05 and could retry without expiry_date
@@ -903,7 +903,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
             $sqlStmtWaitingReserve->execute([':item_id' => $inum]);
             $waitingReserveRow = $sqlStmtWaitingReserve->fetch();
             $waitingReserve = $waitingReserveRow['WAITING'];
-            if ($rowItem['LOCATION'] == 'PROC') {
+            if ($rowItem['LOCATION'] === 'PROC') {
                 $available = false;
                 $status = 'In processing';
                 $duedate = '';
@@ -990,7 +990,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
                 $onTransfer = true;
             }
 
-            if ($rowItem['DOCTYPE'] == 'PE') {
+            if ($rowItem['DOCTYPE'] === 'PE') {
                 $rowItem['COPYNO'] = $rowItem['PERIONAME'];
             }
             if ($waitingReserve) {
@@ -1013,7 +1013,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
                 //    ? 'N' : $rowItem['RESERVES'],
                 'reserve'      => 'N',
                 'callnumber'   =>
-                    ((null == $rowItem['CALLNO']) || ($rowItem['DOCTYPE'] == 'PE'))
+                    ((null == $rowItem['CALLNO']) || ($rowItem['DOCTYPE'] === 'PE'))
                         ? '' : $rowItem['CALLNO'],
                 'duedate'      => ($onTransfer || $waiting)
                     ? '' : (string)$duedate_formatted,
@@ -1252,7 +1252,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
                 ),
                 'position' => $this->getField($hold->{'priority'}),
                 'title' => $this->getField($hold->{'title'}),
-                'available' => ($this->getField($hold->{'found'}) == 'W'),
+                'available' => ($this->getField($hold->{'found'}) === 'W'),
                 'reserve_id' => $this->getField($hold->{'reserve_id'}),
             ];
         }
@@ -2001,7 +2001,7 @@ class KohaILSDI extends AbstractBase implements HttpServiceAwareInterface, Logge
     public function supportsMethod($method, $params)
     {
         // Loan history is only available if properly configured
-        if ($method == 'getMyTransactionHistory') {
+        if ($method === 'getMyTransactionHistory') {
             return !empty($this->config['TransactionHistory']['enabled']);
         }
         return is_callable([$this, $method]);
